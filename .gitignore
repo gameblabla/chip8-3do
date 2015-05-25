@@ -1,0 +1,7 @@
+*.o
+*.tns
+*.nes
+*.ch8
+*.zip
+*.elf
+3DO/*.o

@@ -1,0 +1,8 @@
+CD_OBJECTS     =
+OBJECTS        = chip8.o PCFX/functions.c PCFX/input.c
+ELF_TARGET     = chip8.elf
+BIN_TARGET     = chip8.bin
+ADD_FILES      = 
+CDOUT          = chip8
+
+include ../example.mk
