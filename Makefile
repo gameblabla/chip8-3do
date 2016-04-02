@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -O2
-LDFLAGS = `sdl-config --cflags --libs` -lSDLmain -lSDL -std=c89 -DEMBEDDED
+CFLAGS = -O0 -g
+LDFLAGS = `sdl-config --cflags --libs` -lSDLmain -lSDL -std=c89
 OUTPUT = chip8.elf
 
 SOURCES = chip8.c

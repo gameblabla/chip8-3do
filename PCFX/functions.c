@@ -71,12 +71,12 @@ void crapload()
 
 void play_beep()
 {
-		eris_low_psg_set_channel(0);
-		eris_low_psg_set_freq(0x1FC >> i); /* 5 octaves of A */
-		eris_low_psg_set_balance(0xF, 0xF);
-		eris_low_psg_set_volume(0, 0, 0);
-		eris_low_psg_waveform_data(0x1F);
-		eris_low_psg_set_volume(0x1F, 1, 0);	
+	eris_low_psg_set_channel(0);
+	eris_low_psg_set_freq(0x1FC >> i); /* 5 octaves of A */
+	eris_low_psg_set_balance(0xF, 0xF);
+	eris_low_psg_set_volume(0, 0, 0);
+	eris_low_psg_waveform_data(0x1F);
+	eris_low_psg_set_volume(0x1F, 1, 0);	
 }
 
 void stop_beep()

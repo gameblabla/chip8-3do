@@ -1,2 +1,2 @@
-3DOSigner\3DOEncrypt.exe genromtags chip.iso
+3DOSigner\3DOEncrypt.exe genromtags game.iso
 pause

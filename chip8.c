@@ -23,6 +23,7 @@
 	#include "3DO/GestionSprites.h"
 	#include "3DO/GestionTextes.h"
 	#include "3DO/system.h"
+	#include <filestreamfunctions.h>
 #elif defined(PCFX)
 	#include "PCFX/functions.h"
 	#include "PCFX/input.h"
@@ -47,26 +48,16 @@ char chr;
 
 #ifdef EMBEDDED
 void load_rom(int start) 
-#else
-void load_rom(FILE* fp, int start) 
-#endif
 {
     int c, i;
-    
-#ifndef EMBEDDED
-    for (i=0; (c = fgetc(fp)) != EOF; i++) 
-    {
-        memory[i + start] = c;
-    }
-#else
 	for (i=0; i<ROM_SIZE; i++) 
     {
 		c = ROM[i];
         memory[i + start] = c;
     }
+}
 #endif
 
-}
 
 void beep() 
 {
@@ -88,23 +79,22 @@ void beep()
 
 int main(int argc, char* argv[]) 
 {
-
     /* Load ROM */
-#ifndef EMBEDDED
-    FILE* fp;
-	fp = fopen("rom.ch8", "rb");
-#endif 
 
 #ifdef EMBEDDED
     load_rom(0x200);
+#elif THREEDO
+	Stream* fp;
+    fp = OpenDiskStream( "rom.ch8", 4096 );
+    ReadDiskStream(fp, (char *) memory + 0x200, 4096 );
+    CloseDiskStream(fp);
 #else
-    load_rom(fp, 0x200);
+    FILE* fp;
+	fp = fopen("rom.ch8", "rb");
+    fread (memory + 0x200,sizeof(memory),1,fp);
+	fclose(fp);
 #endif
-    
-#ifndef EMBEDDED
-    fclose(fp);
-#endif
-    
+
     /* Load hex font */
     for (temp=0; temp < 80; temp++) 
     {
@@ -234,7 +224,7 @@ int main(int argc, char* argv[])
                 break;
             case 0xC000:
 #if defined(THREEDO) || defined(PCFX)
-				srand(0);
+		srand(0);
 #else
                 srand(time(NULL));
 #endif
@@ -342,7 +332,9 @@ int main(int argc, char* argv[])
         }
     }
     
-#if !defined(THREEDO) || !defined(PCFX)
+#if defined(THREEDO) 
+#elif defined(PCFX)
+#else
     SDL_Quit();
 #endif
     
@@ -352,14 +344,7 @@ int main(int argc, char* argv[])
 void draw_pixel(int x, int y)
 {
 #ifdef THREEDO
-	if (color) 
-	{
-		fill_rectangle(x, y+60, SCALE, 0, 255, 0);
-	}
-	else 
-	{
-		fill_rectangle(x, y+60, SCALE, 0, 0, 0);
-	}
+	fill_rectangle(x, y+60, SCALE, 0, (color ? 255 : 0), 0);
 #elif defined(PCFX)
 	print("O", x ,y , 0);
 #else
@@ -391,9 +376,7 @@ void Controls()
 {
 
 #ifdef THREEDO
-
 	uint32	gButtons;
-	
 	DoControlPad(1, &gButtons, (ControlUp | ControlDown | ControlLeft | ControlRight));
 	
 	

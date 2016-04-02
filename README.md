@@ -5,12 +5,12 @@ CHIP8 emulator for 3DO
 Port to 3DO by gameblala
 
 This is a port of a CHIP8 emulator to the 3DO.
-You need to bin2c your ROM and re-compile from scratch if you want to play another game other than BRIX.
 
-The emulator runs fullspeed on 3DO.
-In fact, it's a little too fast.
+It is provided with its own game Tetris but you can swap it with your own chip8 game.
+Simply replace the rom.ch8 rom file with your own and then use OperaFS,
+tell it to use the "CD" directory and you'll end up with a ISO file to burn on your 3DO.
 
-The binary has the BRIX game included with.
+The emulator runs fullspeed on 3DO but it is sometimes bottleneck by the pixel drawing.
 
 It was based on another chip8 emulator but it came with no license !
 All the modifications to this chip8 emulator are licensed under the MIT license.
