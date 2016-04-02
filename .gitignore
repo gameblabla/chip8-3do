@@ -4,4 +4,6 @@
 *.ch8
 *.zip
 *.elf
+Release
+Release/
 3DO/*.o
